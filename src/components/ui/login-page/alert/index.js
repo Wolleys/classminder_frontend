@@ -12,7 +12,7 @@ const AlertStack = ({ children }) => {
 
     return (
         <Box sx={{ display: "flex" }}>
-            <Stack sx={{ width: "100%" }} spacing={2}>
+            <Stack sx={{ width: "100%" }} spacing={1}>
                 <Alert severity="info">
                     <AlertTitle sx={titleStyle}>Login credentials</AlertTitle>
                     <span style={spanStyle}>
