@@ -1,5 +1,5 @@
 import { createContext, useContext, useState } from "react";
-import { login, refreshToken } from "../api/auth";
+import { login, refreshToken, logout } from "../api/auth";
 
 // AuthContext
 const AuthContext = createContext({});
@@ -12,6 +12,9 @@ export const useAuth = () => {
 // AuthProvider component to provide the supplier context
 export const AuthProvider = ({ children }) => {
     const [user, setUser] = useState(null);
+    const [persist, setPersist] = useState(
+        JSON.parse(localStorage.getItem("persist")) || false
+    );
 
     // Function to handle user login
     const loginUser = async (userCredentials) => {
@@ -31,7 +34,7 @@ export const AuthProvider = ({ children }) => {
             const response = await refreshToken();
             const token = response.data?.token;
             setUser((prev) => {
-                return { ...prev, accessToken: token };
+                return { ...prev, token };
             });
             return token;
         } catch (error) {
@@ -43,14 +46,23 @@ export const AuthProvider = ({ children }) => {
     const logoutUser = async () => {
         try {
             setUser(null);
-            return { success: true, message: "Logout successful" };
+            const response = await logout();
+            const data = response?.data;
+            return data;
         } catch (error) {
-            return { success: false, message: "Logout failed" };
+            throw error;
         }
     };
 
     // Value object to be provided by the context
-    const authContextValue = { user, loginUser, userToken, logoutUser };
+    const authContextValue = {
+        user,
+        persist,
+        loginUser,
+        userToken,
+        logoutUser,
+        setPersist,
+    };
 
     return (
         <AuthContext.Provider value={authContextValue}>

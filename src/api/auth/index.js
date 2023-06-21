@@ -1,6 +1,6 @@
 import api from "../";
 
-// User login
+// Login user
 export const login = async (data) => {
     try {
         const response = await api.post("/auth/login", data);
@@ -14,6 +14,16 @@ export const login = async (data) => {
 export const refreshToken = async () => {
     try {
         const response = await api.get("/auth/refresh");
+        return response;
+    } catch (error) {
+        throw error;
+    }
+};
+
+// Logout user
+export const logout = async () => {
+    try {
+        const response = await api.get("/auth/logout");
         return response;
     } catch (error) {
         throw error;

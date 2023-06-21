@@ -6,6 +6,7 @@ import NotFoundRoute from "./not-found";
 import RequireAuth from "./protected";
 import Layout from "../components/ui/layouts";
 import { Route, Routes } from "react-router-dom";
+import PersistLogin from "../components/persit-login";
 
 const AppRoutes = () => {
     return (
@@ -14,17 +15,19 @@ const AppRoutes = () => {
                 {/* Public routes */}
                 <Route path="/*" element={<LoginRoute />} />
 
-                {/* Protected routes */}
-                <Route element={<RequireAuth allowedRoles={"Admin"} />}>
-                    <Route path="admin/*" element={<AdminRoutes />} />
-                </Route>
+                {/* Persist login on protected routes */}
+                <Route element={<PersistLogin />}>
+                    <Route element={<RequireAuth allowedRoles={"Admin"} />}>
+                        <Route path="admin/*" element={<AdminRoutes />} />
+                    </Route>
 
-                <Route element={<RequireAuth allowedRoles={"Student"} />}>
-                    <Route path="students/*" element={<StudentRoutes />} />
-                </Route>
+                    <Route element={<RequireAuth allowedRoles={"Student"} />}>
+                        <Route path="students/*" element={<StudentRoutes />} />
+                    </Route>
 
-                <Route element={<RequireAuth allowedRoles={"Teacher"} />}>
-                    <Route path="teachers/*" element={<TeacherRoutes />} />
+                    <Route element={<RequireAuth allowedRoles={"Teacher"} />}>
+                        <Route path="teachers/*" element={<TeacherRoutes />} />
+                    </Route>
                 </Route>
 
                 {/* Catch all undefined routes */}

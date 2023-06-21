@@ -1,8 +1,9 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../../context/AuthContext";
 import FormikForm from "../../../components/form/formik";
 import { navigateToRole } from "../../../utils/navigate";
+import { FormControlLabel, Checkbox } from "@mui/material";
 import { loginSchema } from "../../../validation/login-schema";
 import SubmitBtn from "../../../components/form/button/submit";
 import TextField from "../../../components/form/text-field/auth";
@@ -10,7 +11,7 @@ import AlertStack from "../../../components/ui/login-page/alert";
 import { Alert, Container, Typography, Box } from "@mui/material";
 
 const SignInForm = () => {
-    const { loginUser } = useAuth();
+    const { loginUser, persist, setPersist } = useAuth();
     const navigate = useNavigate();
 
     const [error, setError] = useState();
@@ -51,6 +52,12 @@ const SignInForm = () => {
         }
     };
 
+    const togglePersist = () => setPersist((prev) => !prev);
+
+    useEffect(() => {
+        localStorage.setItem("persist", persist);
+    }, [persist]);
+
     const formProps = {
         schema: loginSchema,
         values: initialValues,
@@ -70,6 +77,18 @@ const SignInForm = () => {
                         style={{ marginBottom: 10 }}
                     />
                     <TextField name="password" placeholder="Password" type="password" />
+                    <FormControlLabel
+                        sx={{ float: "left", mt: 1 }}
+                        control={
+                            <Checkbox
+                                value="remember"
+                                color="primary"
+                                onChange={togglePersist}
+                                checked={persist}
+                            />
+                        }
+                        label="Remember me"
+                    />
                     <SubmitBtn fullWidth sx={styles.button}>
                         {isSubmitting ? "Signing In..." : "Sign In"}
                     </SubmitBtn>
