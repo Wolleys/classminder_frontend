@@ -1,5 +1,5 @@
 import { createContext, useContext, useState } from "react";
-import { login } from "../api/auth";
+import { login, refreshToken } from "../api/auth";
 
 // AuthContext
 const AuthContext = createContext({});
@@ -25,6 +25,20 @@ export const AuthProvider = ({ children }) => {
         }
     };
 
+    // Function to handle user refresh token
+    const userToken = async () => {
+        try {
+            const response = await refreshToken();
+            const token = response.data?.token;
+            setUser((prev) => {
+                return { ...prev, accessToken: token };
+            });
+            return token;
+        } catch (error) {
+            throw error;
+        }
+    };
+
     // Function to handle user logout
     const logoutUser = async () => {
         try {
@@ -36,7 +50,7 @@ export const AuthProvider = ({ children }) => {
     };
 
     // Value object to be provided by the context
-    const authContextValue = { user, loginUser, logoutUser };
+    const authContextValue = { user, loginUser, userToken, logoutUser };
 
     return (
         <AuthContext.Provider value={authContextValue}>
