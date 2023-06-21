@@ -1,6 +1,8 @@
 import { useState } from "react";
-import { login } from "../../../api/auth";
+import { useNavigate } from "react-router-dom";
+import { useAuth } from "../../../context/AuthContext";
 import FormikForm from "../../../components/form/formik";
+import { navigateToRole } from "../../../utils/navigate";
 import { loginSchema } from "../../../validation/login-schema";
 import SubmitBtn from "../../../components/form/button/submit";
 import TextField from "../../../components/form/text-field/auth";
@@ -8,7 +10,10 @@ import AlertStack from "../../../components/ui/login-page/alert";
 import { Alert, Container, Typography, Box } from "@mui/material";
 
 const SignInForm = () => {
-    const [error, setError] = useState(null);
+    const { loginUser } = useAuth();
+    const navigate = useNavigate();
+
+    const [error, setError] = useState();
     const [isSubmitting, setIsSubmitting] = useState(false);
 
     const styles = {
@@ -31,8 +36,10 @@ const SignInForm = () => {
         try {
             setIsSubmitting(true); // Set the submitting state to true
             setError(null); // Clear any previous errors
-            const response = await login(values);
-            console.log(response.data);
+
+            const user = await loginUser(values);
+            navigateToRole(user, navigate); // Call the function after successful login
+            setIsSubmitting(false); // Set the submitting state back to false
         } catch (error) {
             if (!error?.response) {
                 setError("No Server Response");
