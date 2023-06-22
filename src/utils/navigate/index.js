@@ -15,11 +15,11 @@ export const navigateToRole = (user, navigate) => {
         const role = getRoleFromToken(user);
 
         if (role === "Admin") {
-            navigate("/admin");
+            navigate("/admin/dashboard");
         } else if (role === "Student") {
-            navigate("/students");
+            navigate("/students/dashboard");
         } else if (role === "Teacher") {
-            navigate("/teachers");
+            navigate("/teachers/dashboard");
         } else {
             navigate("/unauthorized");
         }
