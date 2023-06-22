@@ -1,5 +1,13 @@
+import Title from "../../../../components/page-title";
+import { Divider } from "@mui/material";
+
 const Students = () => {
-    return <div>Students Elements</div>;
+    return (
+        <>
+            <Title title="Students" />
+            <Divider sx={{mb: 3}} />
+        </>
+    );
 };
 
 export default Students;
