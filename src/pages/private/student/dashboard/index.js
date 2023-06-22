@@ -1,15 +1,5 @@
-import { useAuth } from "../../../../context/AuthContext";
-import { getIdFromToken } from "../../../../utils/navigate";
-
-const StudDashboard = () => {
-    const { user } = useAuth();
-    const userId = getIdFromToken(user);
-    return (
-        <>
-            <h1> Student Dashboard</h1>
-            <p>Welcome: {userId}</p>
-        </>
-    );
+const Dashbord = () => {
+    return <div>Student Dashboard</div>;
 };
 
-export default StudDashboard;
+export default Dashbord;
