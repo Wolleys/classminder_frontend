@@ -1,15 +1,5 @@
-import { useAuth } from "../../../../context/AuthContext";
-import { getIdFromToken } from "../../../../utils/navigate";
-
-const TchrDashboard = () => {
-    const { user } = useAuth();
-    const userId = getIdFromToken(user);
-    return (
-        <>
-            <h1> Teacher Dashboard</h1>
-            <p>Welcome: {userId}</p>
-        </>
-    );
+const Dashbord = () => {
+    return <div>Teacher Dashboard</div>;
 };
 
-export default TchrDashboard;
+export default Dashbord;

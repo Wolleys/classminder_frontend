@@ -5,8 +5,15 @@ import SettingsList from "../menu-list/admin/settingsList";
 import SecondaryList from "../menu-list/admin/secondaryList";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import { List, Divider, IconButton, Toolbar, Box } from "@mui/material";
+
+// Student menu lists
 import { MainList as StudMainList } from "../menu-list/student/mainList";
 import { SettingsList as StudSettingsList } from "../menu-list/student/settingsList";
+
+// Teacher menu lists
+import { MainList as TchrMainList } from "../menu-list/teacher/mainList";
+import { SettingsList as TchrSettingsList } from "../menu-list/teacher/settingsList";
+import { SecondaryList as TchrSecondaryList } from "../menu-list/teacher/secondaryList";
 
 const drawerWidth = 240;
 const AppDrawer = styled(MuiDrawer, {
@@ -56,7 +63,7 @@ const Drawer = (props) => {
                 {userRole === "Admin" ? (
                     <MainList />
                 ) : userRole === "Teacher" ? (
-                    "Teacher List"
+                    <TchrMainList />
                 ) : (
                     <StudMainList />
                 )}
@@ -65,14 +72,14 @@ const Drawer = (props) => {
                 {userRole === "Admin" ? (
                     <SecondaryList />
                 ) : userRole === "Teacher" ? (
-                    "Teacher List"
+                    <TchrSecondaryList />
                 ) : null}
             </List>
             <Box style={{ bottom: 0, position: "absolute", width: "100%" }}>
                 {userRole === "Admin" ? (
                     <SettingsList />
                 ) : userRole === "Teacher" ? (
-                    "Teacher List"
+                    <TchrSettingsList />
                 ) : (
                     <StudSettingsList />
                 )}
