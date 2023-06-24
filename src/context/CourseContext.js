@@ -1,11 +1,6 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import useFetch from "../hooks/useFetch";
-import {
-    getCourseById,
-    addCourse,
-    updateCourse,
-    deleteCourse,
-} from "../api/course";
+import useAxiosPrivate from "../hooks/useAxiosPrivate";
 
 // CourseContext
 const CourseContext = createContext({});
@@ -19,6 +14,7 @@ export const useCourse = () => {
 export const CourseProvider = ({ children }) => {
     const [courses, setCourses] = useState([]);
     const coursesData = useFetch("/courses");
+    const axiosPrivate = useAxiosPrivate();
 
     useEffect(() => {
         if (coursesData) {
@@ -29,7 +25,7 @@ export const CourseProvider = ({ children }) => {
     // Function to fetch a course by ID
     const getOneCourse = async (id) => {
         try {
-            const data = await getCourseById(id);
+            const { data } = await axiosPrivate.get(`/courses/${id}`);
             return data;
         } catch (error) {
             console.log("Error fetching course by ID:", error);
@@ -39,17 +35,19 @@ export const CourseProvider = ({ children }) => {
     // Function to add a new course
     const createNewCourse = async (courseData) => {
         try {
-            const data = await addCourse(courseData);
-            setCourses((prevCourses) => [...prevCourses, data]);
+            const response = await axiosPrivate.post("/courses", courseData);
+            const course = response.data.data;
+            setCourses((prevCourses) => [course, ...prevCourses]);
+            return course;
         } catch (error) {
-            console.log("Error adding new course:", error);
+            throw error;
         }
     };
 
     // Function to update a course
     const updateOneCourse = async (id, courseData) => {
         try {
-            const data = await updateCourse(id, courseData);
+            const { data } = await axiosPrivate.put(`/courses/${id}`, courseData);
             setCourses((prevCourses) =>
                 prevCourses.map((course) => (course.id === id ? data : course))
             );
@@ -61,7 +59,7 @@ export const CourseProvider = ({ children }) => {
     // Function to delete a course
     const deleteOneCourse = async (id) => {
         try {
-            await deleteCourse(id);
+            await axiosPrivate.delete(`/courses/${id}`);
             setCourses((prevCourses) =>
                 prevCourses.filter((course) => course.id !== id)
             );
