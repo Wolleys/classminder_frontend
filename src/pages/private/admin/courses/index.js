@@ -1,14 +1,15 @@
-import Title from "../../../../components/page-title";
-import { Divider } from "@mui/material";
 import CoursesList from "./courses-list";
+import Title from "../../../../components/page-title";
+import { CourseProvider } from "../../../../context/CourseContext";
+import LayoutDivider from "../../../../components/divider/layout-divider";
 
 const Courses = () => {
     return (
-        <>
+        <CourseProvider>
             <Title title="Courses" />
-            <Divider sx={{ mb: 3 }} />
+            <LayoutDivider />
             <CoursesList />
-        </>
+        </CourseProvider>
     );
 };
 
