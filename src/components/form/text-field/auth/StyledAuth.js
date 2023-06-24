@@ -1,6 +1,6 @@
 import TextField from "@mui/material/TextField";
 
-const StyledTextField = ({ ...props }) => {
+const StyledAuth = ({ ...props }) => {
     const AuthTextField = {
         borderRadius: "4px",
         backgroundColor: "#f6f8fa",
@@ -48,4 +48,4 @@ const StyledTextField = ({ ...props }) => {
     return <TextField {...props} {...defaultProps} sx={AuthTextField} />;
 };
 
-export default StyledTextField;
+export default StyledAuth;

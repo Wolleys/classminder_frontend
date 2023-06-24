@@ -1,6 +1,10 @@
+import AddCourse from "../actions/add";
 import { useNavigate } from "react-router-dom";
 import PrimaryTable from "../../../../../components/table";
+import AddOutlinedIcon from "@mui/icons-material/AddOutlined";
+import { useForm } from "../../../../../context/FormContext";
 import { useCourse } from "../../../../../context/CourseContext";
+import PrimarySearchBar from "../../../../../components/search-bar/primary";
 import ViewEditDel from "../../../../../components/action-menu/view-edit-del";
 
 const columns = [
@@ -17,6 +21,7 @@ const columns = [
 const CoursesList = () => {
     const navigate = useNavigate();
     const { courses } = useCourse();
+    const { handleClickOpen } = useForm();
 
     const viewItem = (row) => navigate(`/jobs/job-profile/${row.id}`);
     const editItem = (row) => navigate(`/jobs/edit-job/${row.id}`);
@@ -38,7 +43,19 @@ const CoursesList = () => {
         };
     });
 
-    return <PrimaryTable data={courseData} columns={columns} />;
+    const searchBarProps = {
+        label: "Add Course",
+        open: handleClickOpen,
+        icon: <AddOutlinedIcon />,
+    };
+
+    return (
+        <>
+            <PrimarySearchBar {...searchBarProps} />
+            <PrimaryTable data={courseData} columns={columns} />
+            <AddCourse />
+        </>
+    );
 };
 
 export default CoursesList;

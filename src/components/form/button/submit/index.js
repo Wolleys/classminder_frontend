@@ -1,5 +1,5 @@
 import { useFormikContext } from "formik";
-import StyledButtons from "../styled";
+import StyledBtn from "../styled/StyledBtn";
 
 const SubmitBtn = ({ children, ...otherProps }) => {
     const { submitForm } = useFormikContext();
@@ -16,7 +16,7 @@ const SubmitBtn = ({ children, ...otherProps }) => {
         disableElevation: true,
     };
 
-    return <StyledButtons {...configButton}>{children}</StyledButtons>;
+    return <StyledBtn {...configButton}>{children}</StyledBtn>;
 };
 
 export default SubmitBtn;

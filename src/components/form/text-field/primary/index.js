@@ -1,5 +1,5 @@
 import { useField } from "formik";
-import StyledAuth from "./StyledAuth";
+import StyledPrimary from "./StyledPrimary";
 
 const TextField = ({ name, ...otherProps }) => {
     const [field, meta] = useField(name);
@@ -14,7 +14,7 @@ const TextField = ({ name, ...otherProps }) => {
         configTextField.helperText = meta.error;
     }
 
-    return <StyledAuth {...configTextField} />;
+    return <StyledPrimary {...configTextField} />;
 };
 
 export default TextField;

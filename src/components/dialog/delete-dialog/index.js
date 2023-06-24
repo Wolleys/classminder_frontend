@@ -1,4 +1,5 @@
 import { forwardRef } from "react";
+import ErrorBtn from "../../form/button/error";
 import { Button, Slide, Dialog, DialogActions } from "@mui/material";
 import { DialogContent, DialogContentText, DialogTitle } from "@mui/material";
 
@@ -50,20 +51,20 @@ const DeleteDialog = (props) => {
         <Dialog {...defaultProps}>
             <DialogTitle sx={dialogTitleStyle}>Are you absolutely sure?</DialogTitle>
             <DialogContent>
-                <DialogContentText id="alert" sx={dialogContentTextStyle}>
+                <DialogContentText sx={dialogContentTextStyle}>
                     Once you delete, there is no going back. Please be certain.
                 </DialogContentText>
             </DialogContent>
             <DialogActions>
                 <Button {...butttonProps}> Cancle </Button>
-                <Button
+                <ErrorBtn
                     onClick={() => {
                         handleCloseDialog();
                         deleteItem(row);
                     }}
                 >
                     Delete
-                </Button>
+                </ErrorBtn>
             </DialogActions>
         </Dialog>
     );

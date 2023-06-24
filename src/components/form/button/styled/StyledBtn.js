@@ -1,6 +1,6 @@
 import { Button, styled } from "@mui/material";
 
-const StyledButton = ({ ...props }) => {
+const StyledBtn = ({ ...props }) => {
     const PrimaryButton = styled(Button)({
         fontSize: 14,
         color: "#fff",
@@ -23,4 +23,4 @@ const StyledButton = ({ ...props }) => {
     return <PrimaryButton {...props} />;
 };
 
-export default StyledButton;
+export default StyledBtn;
