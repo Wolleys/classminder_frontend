@@ -1,4 +1,5 @@
 import AddCourse from "../actions/add";
+import EditCourse from "../actions/edit";
 import { useNavigate } from "react-router-dom";
 import PrimaryTable from "../../../../../components/table";
 import AddOutlinedIcon from "@mui/icons-material/AddOutlined";
@@ -21,10 +22,12 @@ const columns = [
 const CoursesList = () => {
     const navigate = useNavigate();
     const { courses } = useCourse();
-    const { handleClickOpen } = useForm();
+    const { handleClickOpen, handleEditOpen, selectedRowData } = useForm();
 
-    const viewItem = (row) => navigate(`/jobs/job-profile/${row.id}`);
-    const editItem = (row) => navigate(`/jobs/edit-job/${row.id}`);
+    const viewItem = (row) => navigate(`/admin/courses/view/${row.id}`);
+    const editItem = (row) => {
+        handleEditOpen(row);
+    };
     const deleteItem = (row) => {
         console.log(row.id);
     };
@@ -54,6 +57,7 @@ const CoursesList = () => {
             <PrimarySearchBar {...searchBarProps} />
             <PrimaryTable data={courseData} columns={columns} />
             <AddCourse />
+            {selectedRowData && <EditCourse />}
         </>
     );
 };

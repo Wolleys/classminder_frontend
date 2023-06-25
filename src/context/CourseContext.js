@@ -25,10 +25,11 @@ export const CourseProvider = ({ children }) => {
     // Function to fetch a course by ID
     const getOneCourse = async (id) => {
         try {
-            const { data } = await axiosPrivate.get(`/courses/${id}`);
-            return data;
+            const response = await axiosPrivate.get(`/courses/${id}`);
+            const course = response.data.data;
+            return course;
         } catch (error) {
-            console.log("Error fetching course by ID:", error);
+            throw error;
         }
     };
 
@@ -36,9 +37,9 @@ export const CourseProvider = ({ children }) => {
     const createNewCourse = async (courseData) => {
         try {
             const response = await axiosPrivate.post("/courses", courseData);
-            const course = response.data.data;
-            setCourses((prevCourses) => [course, ...prevCourses]);
-            return course;
+            const addedCourse = response.data.data;
+            setCourses((prevCourses) => [addedCourse, ...prevCourses]);
+            return addedCourse;
         } catch (error) {
             throw error;
         }
@@ -47,12 +48,14 @@ export const CourseProvider = ({ children }) => {
     // Function to update a course
     const updateOneCourse = async (id, courseData) => {
         try {
-            const { data } = await axiosPrivate.put(`/courses/${id}`, courseData);
+            const response = await axiosPrivate.patch(`/courses/${id}`, courseData);
+            const updatedCourse = response.data.data;
             setCourses((prevCourses) =>
-                prevCourses.map((course) => (course.id === id ? data : course))
+                prevCourses.map((course) => (course.id === id ? updatedCourse : course))
             );
+            return updatedCourse;
         } catch (error) {
-            console.log("Error updating course:", error);
+            throw error;
         }
     };
 
@@ -64,7 +67,7 @@ export const CourseProvider = ({ children }) => {
                 prevCourses.filter((course) => course.id !== id)
             );
         } catch (error) {
-            console.log("Error deleting course:", error);
+            throw error;
         }
     };
 
