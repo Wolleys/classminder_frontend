@@ -81,8 +81,7 @@ const CoursesList = () => {
         <>
             <PrimarySearchBar {...searchBarProps} />
             <PrimaryTable data={courseData} columns={columns} />
-            <AddCourse /> {/* Add dialog */}
-            {selectedRowData && <EditCourse />} {/* Edit dialog */}
+            {selectedRowData ? <EditCourse /> : <AddCourse />}
             <DeleteDialog {...deleteDialogProps} /> {/* Deleted dialog */}
             <MainSnackbar />
         </>

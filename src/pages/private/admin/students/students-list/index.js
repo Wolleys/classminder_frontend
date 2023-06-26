@@ -1,12 +1,12 @@
 import { useState } from "react";
-import AddClass from "../actions/add";
-import EditClass from "../actions/edit";
+import AddStudent from "../actions/add";
+import EditStudent from "../actions/edit";
 import { useNavigate } from "react-router-dom";
 import PrimaryTable from "../../../../../components/table";
 import { useForm } from "../../../../../context/FormContext";
 import AddOutlinedIcon from "@mui/icons-material/AddOutlined";
 import MainSnackbar from "../../../../../components/snackbar";
-import { useClass } from "../../../../../context/ClassContext";
+import { useStudent } from "../../../../../context/StudentContext";
 import { useSnackbar } from "../../../../../context/SnackbarContext";
 import { useDelDialog } from "../../../../../context/DelDialogContext";
 import DeleteDialog from "../../../../../components/dialog/delete-dialog";
@@ -14,8 +14,12 @@ import PrimarySearchBar from "../../../../../components/search-bar/primary";
 import ViewEditDel from "../../../../../components/action-menu/view-edit-del";
 
 const columns = [
-    { value: "class_name", label: "Class name" },
-    { value: "stream", label: "Stream number" },
+    { value: "first_name", label: "First name" },
+    { value: "middle_name", label: "Middle name" },
+    { value: "last_name", label: "Last name" },
+    { value: "email", label: "Email" },
+    { value: "age", label: "Age" },
+    { value: "admin_number", label: "Admin number" },
     {
         value: "actions",
         label: "Actions",
@@ -24,9 +28,9 @@ const columns = [
     },
 ];
 
-const ClassesList = () => {
+const StudentsList = () => {
     const navigate = useNavigate();
-    const { classes, deleteOneClass } = useClass();
+    const { students, deleteOneStudent } = useStudent();
     const { showSnackbar, setMessage } = useSnackbar();
     const { handleClickOpen, handleEditOpen, selectedRowData } = useForm();
     const { openDelDialog, selectedItem, closeDelDialog } = useDelDialog();
@@ -34,7 +38,7 @@ const ClassesList = () => {
     const [error, setError] = useState();
     const [isSubmitting, setIsSubmitting] = useState(false);
 
-    const viewItem = (row) => navigate(`/admin/classes/view/${row.id}`);
+    const viewItem = (row) => navigate(`/admin/students/view/${row.id}`);
     const editItem = (row) => handleEditOpen(row);
     const deleteItem = (row) => openDelDialog(row);
     const viewEditDelProps = { viewItem, editItem, deleteItem };
@@ -44,9 +48,9 @@ const ClassesList = () => {
             try {
                 setIsSubmitting(true);
                 setError(null);
-                const course = await deleteOneClass(selectedItem.id);
-                if (course) {
-                    setMessage(course.message);
+                const student = await deleteOneStudent(selectedItem.id);
+                if (student) {
+                    setMessage(student.message);
                 }
                 setIsSubmitting(false);
                 closeDelDialog();
@@ -64,7 +68,7 @@ const ClassesList = () => {
     };
     const deleteDialogProps = { error, handleDelete, isSubmitting };
 
-    const classData = classes?.map((item) => {
+    const studentData = students?.map((item) => {
         return {
             ...item,
             actions: <ViewEditDel row={item} {...viewEditDelProps} />,
@@ -72,7 +76,7 @@ const ClassesList = () => {
     });
 
     const searchBarProps = {
-        label: "Add Class",
+        label: "Add Student",
         open: handleClickOpen,
         icon: <AddOutlinedIcon />,
     };
@@ -80,12 +84,12 @@ const ClassesList = () => {
     return (
         <>
             <PrimarySearchBar {...searchBarProps} />
-            <PrimaryTable data={classData} columns={columns} />
-            {selectedRowData ? <EditClass /> : <AddClass />}
+            <PrimaryTable data={studentData} columns={columns} />
+            {selectedRowData ? <EditStudent /> : <AddStudent />}
             <DeleteDialog {...deleteDialogProps} /> {/* Deleted dialog */}
             <MainSnackbar />
         </>
     );
 };
 
-export default ClassesList;
+export default StudentsList;

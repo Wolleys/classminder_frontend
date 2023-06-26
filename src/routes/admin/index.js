@@ -7,6 +7,7 @@ import CourseProfile from "../../pages/private/admin/courses/actions/view";
 import Classes from "../../pages/private/admin/classes";
 import ClassProfile from "../../pages/private/admin/classes/actions/view";
 import Students from "../../pages/private/admin/students";
+import StudentProfile from "../../pages/private/admin/students/actions/view";
 import Teachers from "../../pages/private/admin/teachers";
 import Profile from "../../pages/private/admin/profile";
 import Reports from "../../pages/private/admin/reports";
@@ -22,6 +23,7 @@ const AdminRoutes = () => {
                 <Route path="classes" element={<Classes />} />
                 <Route path="classes/view/:classId" element={<ClassProfile />} />
                 <Route path="students" element={<Students />} />
+                <Route path="students/view/:studentId" element={<StudentProfile />} />
                 <Route path="teachers" element={<Teachers />} />
                 <Route path="profile" element={<Profile />} />
                 <Route path="reports" element={<Reports />} />
