@@ -5,7 +5,6 @@ import { SnackbarProvider } from "../../../../context/SnackbarContext";
 import { DelDialogProvider } from "../../../../context/DelDialogContext";
 import LayoutDivider from "../../../../components/divider/layout-divider";
 
-
 const Courses = () => {
     return (
         <CourseProvider>

@@ -4,8 +4,8 @@ import AdminPage from "../../pages/private/admin";
 import Dashbord from "../../pages/private/admin/dashboard";
 import Courses from "../../pages/private/admin/courses";
 import CourseProfile from "../../pages/private/admin/courses/actions/view";
-// import EditCourse from "../../pages/private/admin/courses/actions/edit";
 import Classes from "../../pages/private/admin/classes";
+import ClassProfile from "../../pages/private/admin/classes/actions/view";
 import Students from "../../pages/private/admin/students";
 import Teachers from "../../pages/private/admin/teachers";
 import Profile from "../../pages/private/admin/profile";
@@ -19,8 +19,8 @@ const AdminRoutes = () => {
                 <Route path="dashboard" element={<Dashbord />} />
                 <Route path="courses" element={<Courses />} />
                 <Route path="courses/view/:courseId" element={<CourseProfile />} />
-                {/* <Route path="courses/edit/:courseId" element={<EditCourse />} /> */}
                 <Route path="classes" element={<Classes />} />
+                <Route path="classes/view/:classId" element={<ClassProfile />} />
                 <Route path="students" element={<Students />} />
                 <Route path="teachers" element={<Teachers />} />
                 <Route path="profile" element={<Profile />} />
