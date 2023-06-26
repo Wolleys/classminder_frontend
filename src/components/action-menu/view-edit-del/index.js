@@ -1,6 +1,5 @@
 import { useState } from "react";
 import MenuDivider from "../../divider/menu-divider";
-import DeleteDialog from "../../dialog/delete-dialog";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import { Menu, MenuItem, IconButton } from "@mui/material";
 import { ListItemText, ListItemIcon } from "@mui/material";
@@ -16,21 +15,6 @@ const ViewEditDel = (props) => {
     const openMenu = Boolean(anchorEl);
     const handleOpenMenu = (event) => setAnchorEl(event.currentTarget);
     const handleCloseMenu = () => setAnchorEl(null);
-
-    //Delete Dialog
-    const [openDialog, setOpenDialog] = useState(false);
-    const handleOpenDialog = () => setOpenDialog(true);
-    const handleCloseDialog = (event, reason) => {
-        if (reason !== "backdropClick") {
-            setOpenDialog(false);
-        }
-    };
-
-    const delDialogProps = {
-        deleteItem,
-        open: openDialog,
-        handleCloseDialog,
-    };
 
     const vertIconStyle = {
         color: "#57606a",
@@ -66,6 +50,13 @@ const ViewEditDel = (props) => {
                 color: "#5046e4",
             },
         },
+    };
+
+    const handleDelete = () => deleteItem(row);
+    const priTypoPropsStyle = {
+        fontSize: 14,
+        color: "#C62828",
+        fontWeight: "bold",
     };
 
     const menuItems = [
@@ -109,27 +100,15 @@ const ViewEditDel = (props) => {
                     </MenuItem>
                 ))}
                 <MenuDivider />
-                <MenuItem
-                    onClick={() => {
-                        handleOpenDialog();
-                        handleCloseMenu();
-                    }}
-                >
+                <MenuItem onClick={handleDelete}>
                     <ListItemIcon>
                         <DeleteOutlineOutlinedIcon fontSize="small" color="error" />
                     </ListItemIcon>
-                    <ListItemText
-                        primaryTypographyProps={{
-                            fontSize: 14,
-                            fontWeight: "bold",
-                            color: "#C62828",
-                        }}
-                    >
+                    <ListItemText primaryTypographyProps={priTypoPropsStyle}>
                         Delete
                     </ListItemText>
                 </MenuItem>
             </Menu>
-            <DeleteDialog {...delDialogProps} />
         </>
     );
 };

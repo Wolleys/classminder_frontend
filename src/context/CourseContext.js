@@ -62,10 +62,12 @@ export const CourseProvider = ({ children }) => {
     // Function to delete a course
     const deleteOneCourse = async (id) => {
         try {
-            await axiosPrivate.delete(`/courses/${id}`);
+            const response = await axiosPrivate.delete(`/courses/${id}`);
+            const deletedCourse = response.data;
             setCourses((prevCourses) =>
                 prevCourses.filter((course) => course.id !== id)
             );
+            return deletedCourse;
         } catch (error) {
             throw error;
         }

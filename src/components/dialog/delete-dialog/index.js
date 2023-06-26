@@ -1,6 +1,7 @@
 import { forwardRef } from "react";
 import ErrorBtn from "../../form/button/error";
-import { Button, Slide, Dialog, DialogActions } from "@mui/material";
+import { useDelDialog } from "../../../context/DelDialogContext";
+import { Button, Slide, Dialog, DialogActions, Alert } from "@mui/material";
 import { DialogContent, DialogContentText, DialogTitle } from "@mui/material";
 
 const Transition = forwardRef(function Transition(props, ref) {
@@ -8,7 +9,8 @@ const Transition = forwardRef(function Transition(props, ref) {
 });
 
 const DeleteDialog = (props) => {
-    const { open, handleCloseDialog, row, deleteItem } = props;
+    const { error, handleDelete, isSubmitting } = props;
+    const { delDialogOpen, closeDelDialog } = useDelDialog();
 
     const paperPropsStyle = {
         boxShadow: "none",
@@ -16,9 +18,9 @@ const DeleteDialog = (props) => {
         border: "1px solid #ff818266",
     };
     const defaultProps = {
-        open: open,
+        open: delDialogOpen,
         keepMounted: true,
-        onClose: handleCloseDialog,
+        onClose: closeDelDialog,
         TransitionComponent: Transition,
         PaperProps: {
             sx: paperPropsStyle,
@@ -39,7 +41,7 @@ const DeleteDialog = (props) => {
     const butttonProps = {
         color: "error",
         variant: "outlined",
-        onClick: handleCloseDialog,
+        onClick: closeDelDialog,
         sx: {
             fontSize: 14,
             lineHeight: 1.3,
@@ -56,16 +58,18 @@ const DeleteDialog = (props) => {
                 </DialogContentText>
             </DialogContent>
             <DialogActions>
-                <Button {...butttonProps}> Cancle </Button>
-                <ErrorBtn
-                    onClick={() => {
-                        handleCloseDialog();
-                        deleteItem(row);
-                    }}
-                >
-                    Delete
+                <Button {...butttonProps} disabled={isSubmitting}>
+                    Cancle
+                </Button>
+                <ErrorBtn onClick={handleDelete}>
+                    {isSubmitting ? "Deleting..." : "Delete"}
                 </ErrorBtn>
             </DialogActions>
+            {error && (
+                <Alert severity="error" align="center" sx={{ mt: 2 }}>
+                    {error}
+                </Alert>
+            )}
         </Dialog>
     );
 };
