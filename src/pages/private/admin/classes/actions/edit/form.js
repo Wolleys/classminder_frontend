@@ -1,10 +1,11 @@
 import { useState } from "react";
-import { Grid, Button, Alert } from "@mui/material";
+import { Grid, Alert } from "@mui/material";
 import { useForm } from "../../../../../../context/FormContext";
 import FormikForm from "../../../../../../components/form/formik";
 import { useClass } from "../../../../../../context/ClassContext";
 import classSchema from "../../../../../../validation/class-schema";
 import SubmitBtn from "../../../../../../components/form/button/submit";
+import CancleBtn from "../../../../../../components/form/button/cancle";
 import FormDialog from "../../../../../../components/dialog/form-dialog";
 import TextField from "../../../../../../components/form/text-field/primary";
 
@@ -47,19 +48,6 @@ const EditClassForm = () => {
         onSubmit: handleSubmit,
     };
 
-    const cancleBtnProps = {
-        variant: "outlined",
-        onClick: handleClose,
-        sx: {
-            mr: 1,
-            fontSize: 13,
-            lineHeight: 1.3,
-            color: "#0969da",
-            textTransform: "none",
-            border: "1px solid #0969da",
-        },
-    };
-
     return (
         <FormDialog label="Edit Class">
             <FormikForm {...formProps}>
@@ -74,7 +62,7 @@ const EditClassForm = () => {
                     </Grid>
                 </Grid>
                 <Grid item xs={12} sm={12} sx={{ mt: 2, textAlign: "right" }}>
-                    <Button {...cancleBtnProps}>Cancle</Button>
+                    <CancleBtn onClick={handleClose}>Cancle</CancleBtn>
                     <SubmitBtn> {isSubmitting ? "Updating..." : "Update"}</SubmitBtn>
                 </Grid>
                 {error && (
