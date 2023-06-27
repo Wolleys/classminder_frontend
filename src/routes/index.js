@@ -11,9 +11,9 @@ import PersistLogin from "../components/persit-login";
 const AppRoutes = () => {
     return (
         <Routes>
-            <Route path="/" element={<Layout />}>
+            <Route path="/*" element={<Layout />}>
                 {/* Public routes */}
-                <Route path="/" element={<LoginRoute />} />
+                <Route path="/*" element={<LoginRoute />} />
 
                 {/* Persist login on protected routes */}
                 <Route element={<PersistLogin />}>
