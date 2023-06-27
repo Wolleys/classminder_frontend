@@ -1,23 +1,22 @@
 import { useState } from "react";
-import { editValues } from "../initialValues";
+import { addValues } from "../initialValues";
 import { Grid, Button, Alert } from "@mui/material";
 import { useForm } from "../../../../../../context/FormContext";
 import { useClass } from "../../../../../../context/ClassContext";
 import FormikForm from "../../../../../../components/form/formik";
 import { useCourse } from "../../../../../../context/CourseContext";
-import { useStudent } from "../../../../../../context/StudentContext";
+import { useTeacher } from "../../../../../../context/TeacherContext";
+import teacherSchema from "../../../../../../validation/teacher-schema";
 import SubmitBtn from "../../../../../../components/form/button/submit";
 import FormDialog from "../../../../../../components/dialog/form-dialog";
 import TextField from "../../../../../../components/form/text-field/primary";
-import updateStudentSchema from "../../../../../../validation/student-schema/update";
-import SingleValue from "../../../../../../components/form/auto-complete/single-value";
 import MultipleValues from "../../../../../../components/form/auto-complete/multiple-values";
 
-const EditStudentForm = () => {
+const AddTeacherForm = () => {
     const { classes } = useClass();
     const { courses } = useCourse();
-    const { updateOneStudent } = useStudent();
-    const { handleClose, selectedRowData } = useForm();
+    const { handleClose } = useForm();
+    const { createNewTeacher } = useTeacher();
 
     const [error, setError] = useState();
     const [isSubmitting, setIsSubmitting] = useState(false);
@@ -34,13 +33,14 @@ const EditStudentForm = () => {
         key: item.id,
     }));
 
-    const handleSubmit = async (values) => {
+    const handleSubmit = async (values, { resetForm }) => {
         try {
             setIsSubmitting(true);
             setError(null);
 
-            const student = await updateOneStudent(selectedRowData.id, values);
-            if (student) {
+            const teacher = await createNewTeacher(values);
+            if (teacher) {
+                resetForm();
                 handleClose();
             }
             setIsSubmitting(false);
@@ -56,9 +56,9 @@ const EditStudentForm = () => {
     };
 
     const formProps = {
+        schema: teacherSchema,
+        values: addValues,
         onSubmit: handleSubmit,
-        schema: updateStudentSchema,
-        values: editValues(selectedRowData),
     };
 
     const cancleBtnProps = {
@@ -75,7 +75,7 @@ const EditStudentForm = () => {
     };
 
     return (
-        <FormDialog label="Edit Student">
+        <FormDialog label="Add Teacher">
             <FormikForm {...formProps}>
                 <Grid container spacing={2}>
                     <Grid item xs={12} sm={4} md={4}>
@@ -100,8 +100,8 @@ const EditStudentForm = () => {
                         <TextField name="age" type="number" />
                     </Grid>
                     <Grid item xs={12} sm={4} md={4}>
-                        <label>Admin number</label>
-                        <TextField name="admin_number" />
+                        <label>Service number</label>
+                        <TextField name="service_number" />
                     </Grid>
 
                     <Grid item xs={12} sm={6} md={6}>
@@ -109,13 +109,22 @@ const EditStudentForm = () => {
                         <MultipleValues name="course_id" options={courseOptions} />
                     </Grid>
                     <Grid item xs={12} sm={6} md={6}>
-                        <label>Select student's class</label>
-                        <SingleValue name="class_id" options={classOptions} />
+                        <label>Assign class</label>
+                        <MultipleValues name="class_id" options={classOptions} />
+                    </Grid>
+
+                    <Grid item xs={12} sm={6} md={6}>
+                        <label>Password</label>
+                        <TextField name="password" type="password" />
+                    </Grid>
+                    <Grid item xs={12} sm={6} md={6}>
+                        <label>Confirm password</label>
+                        <TextField name="confirm_password" type="password" />
                     </Grid>
                 </Grid>
                 <Grid item xs={12} sm={12} sx={{ mt: 2, textAlign: "right" }}>
                     <Button {...cancleBtnProps}>Cancle</Button>
-                    <SubmitBtn> {isSubmitting ? "Updating..." : "Update"}</SubmitBtn>
+                    <SubmitBtn> {isSubmitting ? "Saving..." : "Save"}</SubmitBtn>
                 </Grid>
                 {error && (
                     <Alert severity="error" align="center" sx={{ mt: 2 }}>
@@ -127,4 +136,4 @@ const EditStudentForm = () => {
     );
 };
 
-export default EditStudentForm;
+export default AddTeacherForm;

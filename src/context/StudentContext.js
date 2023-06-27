@@ -19,7 +19,7 @@ export const StudentProvider = ({ children }) => {
         }
     }, [studentsData]);
 
-    // Function to fetch a students by ID
+    // Function to fetch a student by ID
     const getOneStudent = async (id) => {
         try {
             const response = await axiosPrivate.get(`/students/${id}`);

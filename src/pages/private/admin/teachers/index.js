@@ -1,12 +1,27 @@
+import TeachersList from "./teachers-list";
 import Title from "../../../../components/page-title";
-import { Divider } from "@mui/material";
+import { ClassProvider } from "../../../../context/ClassContext";
+import { CourseProvider } from "../../../../context/CourseContext";
+import { TeacherProvider } from "../../../../context/TeacherContext";
+import { SnackbarProvider } from "../../../../context/SnackbarContext";
+import { DelDialogProvider } from "../../../../context/DelDialogContext";
+import LayoutDivider from "../../../../components/divider/layout-divider";
 
 const Teachers = () => {
     return (
-        <>
-            <Title title="Teachers" />
-            <Divider sx={{mb: 3}} />
-        </>
+        <TeacherProvider>
+            <DelDialogProvider>
+                <SnackbarProvider>
+                    <Title title="Teachers" />
+                    <LayoutDivider />
+                    <ClassProvider>
+                        <CourseProvider>
+                            <TeachersList />
+                        </CourseProvider>
+                    </ClassProvider>
+                </SnackbarProvider>
+            </DelDialogProvider>
+        </TeacherProvider>
     );
 };
 
