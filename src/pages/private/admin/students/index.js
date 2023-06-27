@@ -1,5 +1,7 @@
 import StudentsList from "./students-list";
 import Title from "../../../../components/page-title";
+import { ClassProvider } from "../../../../context/ClassContext";
+import { CourseProvider } from "../../../../context/CourseContext";
 import { StudentProvider } from "../../../../context/StudentContext";
 import { SnackbarProvider } from "../../../../context/SnackbarContext";
 import { DelDialogProvider } from "../../../../context/DelDialogContext";
@@ -12,7 +14,11 @@ const Students = () => {
                 <SnackbarProvider>
                     <Title title="Students" />
                     <LayoutDivider />
-                    <StudentsList />
+                    <ClassProvider>
+                        <CourseProvider>
+                            <StudentsList />
+                        </CourseProvider>
+                    </ClassProvider>
                 </SnackbarProvider>
             </DelDialogProvider>
         </StudentProvider>

@@ -17,7 +17,7 @@ const updateStudentSchema = yup.object().shape({
     admin_number: yup.string().required("Admin number is required"),
     course_id: yup
         .array()
-        .min(1, "You must have at least one course")
+        .min(1, "You must assign at least one course")
         .required("Course is required"),
     class_id: yup.string().required("Class is required"),
 });

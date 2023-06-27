@@ -19,7 +19,7 @@ export const editValues = (selectedRowData) => {
         email: selectedRowData?.email || "",
         age: selectedRowData?.age || "",
         admin_number: selectedRowData?.admin_number || "",
-        course_id: selectedRowData?.course_id || "",
+        course_id: selectedRowData?.course_id || [],
         class_id: selectedRowData?.class_id || "",
     };
 };

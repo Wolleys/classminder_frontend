@@ -2,19 +2,37 @@ import { useState } from "react";
 import { editValues } from "../initialValues";
 import { Grid, Button, Alert } from "@mui/material";
 import { useForm } from "../../../../../../context/FormContext";
+import { useClass } from "../../../../../../context/ClassContext";
 import FormikForm from "../../../../../../components/form/formik";
+import { useCourse } from "../../../../../../context/CourseContext";
 import { useStudent } from "../../../../../../context/StudentContext";
 import SubmitBtn from "../../../../../../components/form/button/submit";
 import FormDialog from "../../../../../../components/dialog/form-dialog";
 import TextField from "../../../../../../components/form/text-field/primary";
 import updateStudentSchema from "../../../../../../validation/student-schema/update";
+import SingleValue from "../../../../../../components/form/auto-complete/single-value";
+import MultipleValues from "../../../../../../components/form/auto-complete/multiple-values";
 
 const EditStudentForm = () => {
+    const { classes } = useClass();
+    const { courses } = useCourse();
     const { updateOneStudent } = useStudent();
     const { handleClose, selectedRowData } = useForm();
 
     const [error, setError] = useState();
     const [isSubmitting, setIsSubmitting] = useState(false);
+
+    const courseOptions = courses?.map((course) => ({
+        label: course.course_name,
+        value: course.id,
+        key: course.id,
+    }));
+
+    const classOptions = classes?.map((item) => ({
+        label: item.stream,
+        value: item.id,
+        key: item.id,
+    }));
 
     const handleSubmit = async (values) => {
         try {
@@ -88,11 +106,11 @@ const EditStudentForm = () => {
 
                     <Grid item xs={12} sm={6} md={6}>
                         <label>Assign course</label>
-                        <TextField name="course_id" />
+                        <MultipleValues name="course_id" options={courseOptions} />
                     </Grid>
                     <Grid item xs={12} sm={6} md={6}>
                         <label>Select student's class</label>
-                        <TextField name="class_id" />
+                        <SingleValue name="class_id" options={classOptions} />
                     </Grid>
                 </Grid>
                 <Grid item xs={12} sm={12} sx={{ mt: 2, textAlign: "right" }}>

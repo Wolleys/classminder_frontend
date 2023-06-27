@@ -18,10 +18,11 @@ const studentSchema = yup.object().shape({
     password: yup.string().min(5).max(15).required("Password is required"),
     confirm_password: yup
         .string()
-        .oneOf([yup.ref("password"), null], "Passwords do not match"),
+        .oneOf([yup.ref("password"), null], "Passwords do not match")
+        .required("Password is required"),
     course_id: yup
         .array()
-        .min(1, "You must have at least one course")
+        .min(1, "You must assign at least one course")
         .required("Course is required"),
     class_id: yup.string().required("Class is required"),
 });
