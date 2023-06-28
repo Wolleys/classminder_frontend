@@ -1,12 +1,11 @@
 import { useEffect, useState } from "react";
+import { BASE_URL } from "../../../../../api";
 import useFetch from "../../../../../hooks/useFetch";
 import DataCard from "../../../../../components/cards/data";
 import Face6OutlinedIcon from "@mui/icons-material/Face6Outlined";
 import SchoolOutlinedIcon from "@mui/icons-material/SchoolOutlined";
 import Person3OutlinedIcon from "@mui/icons-material/Person3Outlined";
 import LocalLibraryOutlinedIcon from "@mui/icons-material/LocalLibraryOutlined";
-
-const BASE_URL = "http://localhost:3300/api/v1";
 
 const DataCardInfo = () => {
     const [userData, setUserData] = useState([

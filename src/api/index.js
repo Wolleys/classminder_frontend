@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const BASE_URL = "https://classminder-1155fd8e41b2.herokuapp.com/api/v1";
+export const BASE_URL = "https://classminder-1155fd8e41b2.herokuapp.com/api/v1";
 
 const api = axios.create({
     baseURL: BASE_URL,
